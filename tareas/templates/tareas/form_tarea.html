@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Tarea</title>
+
+    <style>
+
+        /* ===== CONFIGURACIÓN GENERAL ===== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(
+                135deg,
+                #f5f7fa,
+                #e8edf2
+            );
+            color: #263238;
+        }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+
+        /* ===== TARJETA ===== */
+
+        .task-card {
+
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.10),
+                0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+
+        /* ===== TÍTULO ===== */
+
+        .task-card h1 {
+
+            text-align: center;
+
+            font-size: 30px;
+
+            font-weight: 600;
+
+            color: #263238;
+
+            margin-bottom: 10px;
+        }
+
+
+        .description {
+
+            text-align: center;
+
+            color: #78909c;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ===== FORMULARIO ===== */
+
+        form p {
+
+            margin-bottom: 20px;
+        }
+
+
+        form label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #455a64;
+        }
+
+
+        /* ===== CAMPOS ===== */
+
+        form input,
+        form textarea,
+        form select {
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #d5dce3;
+
+            border-radius: 10px;
+
+            background: #f9fafb;
+
+            color: #263238;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: all 0.25s ease;
+        }
+
+
+        /* ===== TEXTAREA ===== */
+
+        form textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+
+        /* ===== SELECT ===== */
+
+        form select {
+
+            cursor: pointer;
+        }
+
+
+        /* ===== FOCUS ===== */
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+
+            border-color: #607d8b;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 0 0 3px rgba(96, 125, 139, 0.12);
+        }
+
+
+        /* ===== BOTÓN ===== */
+
+        button {
+
+            width: 100%;
+
+            margin-top: 5px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #37474f,
+                #546e7a
+            );
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+
+        button:hover {
+
+            background: linear-gradient(
+                135deg,
+                #263238,
+                #455a64
+            );
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px rgba(55, 71, 79, 0.25);
+        }
+
+
+        button:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* ===== ERRORES ===== */
+
+        .errorlist {
+
+            list-style: none;
+
+            padding: 0;
+
+            margin: 5px 0 10px;
+
+            color: #d32f2f;
+
+            font-size: 13px;
+        }
+
+
+        /* ===== ENLACE INFERIOR ===== */
+
+        .back-section {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #eeeeee;
+        }
+
+
+        .back-section p {
+
+            font-size: 13px;
+
+            color: #90a4ae;
+
+            margin-bottom: 8px;
+        }
+
+
+        .back-link {
+
+            color: #455a64;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+
+        .back-link:hover {
+
+            color: #1976d2;
+
+            text-decoration: underline;
+        }
+
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 500px) {
+
+            .container {
+
+                padding: 15px;
+            }
+
+
+            .task-card {
+
+                padding: 30px 25px;
+            }
+
+
+            .task-card h1 {
+
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+        <div class="task-card">
+
+
+            <h1>
+                Crear nueva tarea
+            </h1>
+
+
+            <p class="description">
+                Completa la información para agregar una nueva tarea
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+
+                <button type="submit">
+                    Guardar tarea
+                </button>
+
+            </form>
+
+
+            <!-- ENLACE A MIS TAREAS -->
+
+            <div class="back-section">
+
+                <p>
+                    ¿Quieres consultar tus tareas?
+                </p>
+
+
+                <a
+                    href="{% url 'listar_tareas' %}"
+                    class="back-link">
+
+                    ← Ver mis tareas
+
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

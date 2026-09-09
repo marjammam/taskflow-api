@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ proyecto.nombre }}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #f5f7fa,
+                #e8edf2
+            );
+
+            color: #263238;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        /* ===== CABECERA DEL PROYECTO ===== */
+
+        .project-header {
+            background: white;
+            padding: 35px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .project-header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #263238;
+
+            margin-bottom: 12px;
+        }
+
+        .project-description {
+            color: #78909c;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ===== TAREAS ===== */
+
+        .tasks-card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .tasks-card h2 {
+            font-size: 23px;
+            margin-bottom: 20px;
+
+            color: #37474f;
+        }
+
+        /* ===== LISTA DE TAREAS ===== */
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 16px 18px;
+
+            margin-bottom: 10px;
+
+            background: #f8fafb;
+
+            border: 1px solid #e5e9ec;
+
+            border-radius: 10px;
+
+            transition: 0.2s;
+        }
+
+        .task-item:hover {
+            background: #f1f4f6;
+
+            transform: translateX(3px);
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: #37474f;
+        }
+
+        /* ===== ESTADO ===== */
+
+        .task-status {
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #8ef5bc;
+
+            color: #547a6d;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ===== CUANDO NO HAY TAREAS ===== */
+
+        .empty-task {
+            padding: 20px;
+
+            text-align: center;
+
+            color: #90a4ae;
+
+            background: #f8fafb;
+
+            border-radius: 10px;
+        }
+
+        /* ===== BOTONES ===== */
+
+        .actions {
+            display: flex;
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #455a64;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #263238;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(38, 50, 56, 0.20);
+        }
+
+        .btn-secondary {
+            background: #eceff1;
+            color: #455a64;
+        }
+
+        .btn-secondary:hover {
+            background: #cfd8dc;
+
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .project-header,
+            .tasks-card {
+                padding: 22px;
+            }
+
+            .project-header h1 {
+                font-size: 26px;
+            }
+
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- INFORMACIÓN DEL PROYECTO -->
+
+        <div class="project-header">
+
+            <h1>
+                {{ proyecto.nombre }}
+            </h1>
+
+            <p class="project-description">
+                {{ proyecto.descripcion }}
+            </p>
+
+        </div>
+
+
+        <!-- TAREAS -->
+
+        <div class="tasks-card">
+
+            <h2>
+                Tareas
+            </h2>
+
+            <ul class="task-list">
+
+                {% for tarea in tareas %}
+
+                    <li class="task-item">
+
+                        <span class="task-title">
+                            {{ tarea.titulo }}
+                        </span>
+
+                        <span class="task-status">
+                            {{ tarea.estado }}
+                        </span>
+
+                    </li>
+
+                {% empty %}
+
+                    <li class="empty-task">
+                        Este proyecto no tiene tareas.
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+
+            <!-- ACCIONES -->
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'crear_tarea' %}"
+                    class="btn btn-primary">
+                    + Agregar tarea
+                </a>
+
+                <a
+                    href="{% url 'listar_proyectos' %}"
+                    class="btn btn-secondary">
+                    ← Volver a mis proyectos
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
