@@ -22,7 +22,7 @@ El proyecto incluye:
 
 1. Clona el repositorio:
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/marjammam/taskflow-api.git
 cd taskflow-api
 ```
 
@@ -90,7 +90,7 @@ Sigue las instrucciones en pantalla para definir usuario, correo y contraseña.
 python manage.py runserver 5050
 ```
 
-La aplicación quedará disponible en `http://127.0.0.1:5050/`.
+La aplicación quedará disponible en `http://127.0.0.1:5050/accounts/login/`.
 
 > Nota: si el puerto 5050 está ocupado, puedes usar cualquier otro puerto libre, por ejemplo `python manage.py runserver 8090`.
 
